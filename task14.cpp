@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void maximum(void *inputBuffer, void *outputBuffer, int * length, MPI_Datatype *type) {
+void maximum_element(void *inputBuffer, void *outputBuffer, int * length, MPI_Datatype *type) {
 	int* input = (int*)inputBuffer;
 	int* output = (int*)outputBuffer;
 	for (int i = 0; i < *length; i++){
@@ -26,7 +26,7 @@ int main(int argc, char **argv){
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	for (i = 0; i < SIZE; i++) a[i] = i + rank + 1;
 	printf("process %d a[0] = %d\n", rank, a[0]);
-	MPI_Op_create(&maximum, 1, &op);
+	MPI_Op_create(&maximum_element, 1, &op);
 	MPI_Reduce(a, b, SIZE, MPI_INT, op , 0, MPI_COMM_WORLD);
 	MPI_Op_free(&op);
 	MPI_Reduce(a, b_val, SIZE, MPI_INT, MPI_MAX , 0, MPI_COMM_WORLD);
